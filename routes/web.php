@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +23,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Rotte per pagine expenses
+Route::resource('transactions', TransactionController::class);
+Route::get('/transactions/export', [TransactionController::class, 'export'])->name('transactions.export');
+
+// Rotte per pagine reports
+Route::resource('reports', ReportController::class);
