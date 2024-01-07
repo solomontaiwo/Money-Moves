@@ -4,23 +4,23 @@
 <div class="container">
     <h2>Transaction List</h2>
 
-    <div class="d-flex mb-3">
-        <!-- Search Form -->
-        <form class="me-3" action="{{ route('transactions.index') }}" method="get">
-            <label for="search">Search:</label>
-            <input type="text" id="search" name="search" value="{{ request('search') }}" class="form-control">
-            <button type="submit" class="btn btn-primary">Search</button>
-        </form>
-
-        <!-- Filter Form -->
-        
+    <div class="card mb-3">
+        <div class="card-body row">
+            <!-- Search Form -->
+            <div class="col-md-12 mb-3">
+                <form action="{{ route('transactions.index') }}" method="get" class="d-flex">
+                    <label for="search" class="visually-hidden">Search:</label>
+                    <input type="text" id="search" name="search" value="{{ request('search') }}" class="form-control" style="width: 100%;">
+                    <button type="submit" class="btn btn-primary ms-2">Search</button>
+                </form>
+            </div>
+        </div>
     </div>
-
 
     <div class="table-responsive">
         <table class="table table-hover">
             <!-- Table Headers -->
-            <thead>
+            <thead class="thead-dark">
                 <tr>
                     <th>Name</th>
                     <th>Amount</th>
@@ -43,8 +43,9 @@
                     <td>{{ $transaction->notes }}</td>
                     <td>{{ $transaction->created_at->format('F j Y') }}</td>
                     <td>{{ $transaction->created_at->diffForHumans() }}</td>
+                    <!-- Action buttons -->
                     <td>
-                        <a href="{{ route('transactions.edit', $transaction->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{{ route('transactions.edit', $transaction->id) }}" class="btn btn-warning btn-sm me-1">Edit</a>
                         <form action="{{ route('transactions.destroy', $transaction->id) }}" method="post" class="d-inline">
                             @csrf
                             @method('DELETE')
@@ -57,8 +58,5 @@
         </table>
     </div>
 
-    <form action="{{ route('transactions.export') }}" method="get">
-        <button type="submit" class="btn btn-primary">Export to CSV</button>
-    </form>
 </div>
 @endsection
