@@ -36,6 +36,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('transactions.index') }}">{{ __('Transactions') }}</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('dashboard.index') }}">Dashboard</a>
+                        </li>
                         @endauth
                     </ul>
 
