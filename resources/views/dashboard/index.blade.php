@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Cashflow Dashboard</h1>
+    <h2>Cashflow Dashboard</h2>
 
     <form action="{{ route('dashboard.index') }}" method="get" class="row g-3">
         <div class="col-md-3 mb-3" style="width: 50%">
