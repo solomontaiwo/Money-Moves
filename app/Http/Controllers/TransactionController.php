@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Log;
 
 class TransactionController extends Controller
 {
@@ -48,22 +48,25 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'type' => 'required|in:expense,income',
             'name' => 'required|string|max:255',
             'amount' => 'required|numeric|between:0,999999.99',
             'category' => 'required|string|max:255',
             'place' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'notes' => 'nullable|string',
+            'date' => 'required|date',
         ]);
 
         $transaction = new Transaction();
+        $transaction->type = $request->input('type');
         $transaction->name = $request->input('name');
+        $transaction->date = $request->input('date');
         $transaction->amount = $request->input('amount');
         $transaction->category = $request->input('category');
         $transaction->place = $request->input('place');
         $transaction->city = $request->input('city');
         $transaction->notes = $request->input('notes', '');
-        $transaction->type = $request->input('type');
 
         $transaction->save();
 
@@ -95,6 +98,8 @@ class TransactionController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'date' => 'required|date',
+            'type' => 'required|string|max:255',
             'amount' => 'required|numeric|between:0,999999.99',
             'category' => 'required|string|max:255',
             'place' => 'required|string|max:255',
@@ -104,6 +109,8 @@ class TransactionController extends Controller
 
         $transaction->update([
             'name' => $request->input('name'),
+            'date' => $request->input('date'),
+            'type' => $request->input('type'),
             'amount' => $request->input('amount'),
             'category' => $request->input('category'),
             'place' => $request->input('place'),
@@ -120,42 +127,5 @@ class TransactionController extends Controller
         $transaction->delete();
 
         return redirect()->route('transactions.index')->with('success', 'Transaction deleted successfully!');
-    }
-
-    public function export()
-    {
-        $transactions = Transaction::all();
-
-        $headers = array(
-            "Content-type" => "text/csv",
-            "Content-Disposition" => "attachment; filename=transactions.csv",
-            "Pragma" => "no-cache",
-            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
-            "Expires" => "0"
-        );
-
-        $handle = fopen('php://output', 'w');
-        fputcsv($handle, ['Name', 'Amount', 'Category', 'Place', 'Notes', 'Date']);
-
-        foreach ($transactions as $transaction) {
-            fputcsv($handle, [
-                $transaction->name,
-                $transaction->amount,
-                $transaction->category,
-                $transaction->place,
-                $transaction->notes,
-                $transaction->created_at->format('d-m-Y H:i'),
-            ]);
-        }
-
-        fclose($handle);
-
-        return Response::stream(
-            function () use ($handle) {
-                fclose($handle);
-            },
-            200,
-            $headers
-        );
     }
 }

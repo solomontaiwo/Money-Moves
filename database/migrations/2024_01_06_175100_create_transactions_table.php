@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('amount', 10, 2);
+            $table->date('date');
             $table->string('category');
             $table->string('place')->nullable();
             $table->string('city')->nullable();

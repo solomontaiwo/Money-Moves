@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $startDate = Carbon::now()->startOfMonth();
-        $endDate = Carbon::now()->endOfMonth();
+        $startDate = Carbon::parse($request->input('start_date', now()->startOfMonth()));
+        $endDate = Carbon::parse($request->input('end_date', now()->endOfMonth()));
 
         $cashflow = $this->getCashflow($startDate, $endDate);
 

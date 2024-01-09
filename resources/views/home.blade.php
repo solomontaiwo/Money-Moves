@@ -1,42 +1,47 @@
 @extends('layouts.app')
 
 @section('content')
+
+<style>
+    .form-group {
+        margin-bottom: 10px;
+    }
+</style>
+
 <div class="container">
     <h2 class="mb-4">Add New Transaction</h2>
 
     <form action="{{ route('transactions.store') }}" method="post">
         @csrf
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label class="form-label">Type:</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="type" id="expense" value="expense" checked>
-                        <label class="form-check-label" for="expense">
-                            Expense
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="type" id="income" value="income">
-                        <label class="form-check-label" for="income">
-                            Income
-                        </label>
-                    </div>
-                </div>
+        <div class="form-group">
+            <label class="form-label">Type:</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="type" id="expense" value="expense" checked>
+                <label class="form-check-label" for="expense">
+                    Expense
+                </label>
             </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="type" id="income" value="income">
+                <label class="form-check-label" for="income">
+                    Income
+                </label>
+            </div>
+        </div>
 
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Transaction Name:</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
-                </div>
-            </div>
+        <div class="form-group">
+            <label for="name" class="form-label">Transaction Name:</label>
+            <input type="text" class="form-control" id="name" name="name" required>
         </div>
 
         <div class="row">
             <div class="col-md-6">
-                <div class="mb-3">
+                <div class="form-group">
+                    <label for="date" class="form-label">Transaction Date:</label>
+                    <input type="date" class="form-control" id="date" name="date" required>
+                </div>
+                <div class="form-group">
                     <label for="amount" class="form-label">Amount:</label>
                     <div class="input-group">
                         <span class="input-group-text">€</span>
@@ -49,7 +54,7 @@
             </div>
 
             <div class="col-md-6">
-                <div class="mb-3">
+                <div class="form-group">
                     <label for="category" class="form-label">Category:</label>
                     <select class="form-select" id="category" name="category" required>
                         <option value="" disabled selected>Select category</option>
@@ -57,23 +62,22 @@
                         <option value="shopping">Shopping</option>
                         <option value="entertainment">Entertainment</option>
                         <option value="other">Other</option>
-                        <!-- Add more categories as needed -->
                     </select>
                 </div>
             </div>
         </div>
 
-        <div class="mb-3">
+        <div class="form-group">
             <label for="place" class="form-label">Place:</label>
             <input type="text" class="form-control" id="place" name="place" placeholder="Enter place" required>
         </div>
 
-        <div class="mb-3">
+        <div class="form-group">
             <label for="city" class="form-label">City:</label>
             <input type="text" class="form-control" id="city" name="city" placeholder="Enter city" required>
         </div>
 
-        <div class="mb-3">
+        <div class="form-group">
             <label for="notes" class="form-label">Notes:</label>
             <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
         </div>
@@ -91,6 +95,7 @@
 
 </div>
 
+<!-- ======== jQuery ======= -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {

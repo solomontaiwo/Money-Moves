@@ -25,6 +25,11 @@
         </div>
 
         <div class="mb-3">
+            <label for="date" class="form-label">Transaction Date:</label>
+            <input type="date" class="form-control" id="date" name="date" value="{{ $transaction->date }}" required>
+        </div>
+
+        <div class="mb-3">
             <label for="category" class="form-label">Category:</label>
             <select class="form-select" id="category" name="category" required>
                 <option value="" disabled>Select category</option>
@@ -34,6 +39,29 @@
                     {{ ucfirst($category) }}
                 </option>
                 @endforeach
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="place" class="form-label">Place:</label>
+            <input type="text" class="form-control" id="place" name="place" value="{{ $transaction->place }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="city" class="form-label">City:</label>
+            <input type="text" class="form-control" id="city" name="city" value="{{ $transaction->city }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="notes" class="form-label">Notes:</label>
+            <textarea class="form-control" id="notes" name="notes" rows="3">{{ $transaction->notes }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="type" class="form-label">Type:</label>
+            <select class="form-select" id="type" name="type" required>
+                <option value="expense" {{ $transaction->type === 'expense' ? 'selected' : '' }}>Expense</option>
+                <option value="income" {{ $transaction->type === 'income' ? 'selected' : '' }}>Income</option>
             </select>
         </div>
 

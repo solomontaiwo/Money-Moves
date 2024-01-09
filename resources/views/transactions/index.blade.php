@@ -2,18 +2,16 @@
 
 @section('content')
 <div class="container">
-    <h2>Transaction List</h2>
+    <h2 class="mb-3">Transaction List</h2>
 
-    <div class="card mb-3">
-        <div class="card-body row">
+    <div class="card mb-4">
+        <div class="card-body">
             <!-- Search Form -->
-            <div class="col-md-12 mb-3">
-                <form action="{{ route('transactions.index') }}" method="get" class="d-flex">
-                    <label for="search" class="visually-hidden">Search:</label>
-                    <input type="text" id="search" name="search" value="{{ request('search') }}" class="form-control" style="width: 100%;">
-                    <button type="submit" class="btn btn-primary ms-2">Search</button>
-                </form>
-            </div>
+            <form action="{{ route('transactions.index') }}" method="get" class="d-flex">
+                <label for="search" class="visually-hidden">Search:</label>
+                <input type="text" id="search" name="search" value="{{ request('search') }}" class="form-control me-2" style="flex: 1;" placeholder="Search transactions">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
         </div>
     </div>
 
@@ -28,7 +26,6 @@
                     <th>Place</th>
                     <th>Notes</th>
                     <th>Date</th>
-                    <th>Inserted</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -41,8 +38,7 @@
                     <td>{{ $transaction->category }}</td>
                     <td>{{ $transaction->place }}</td>
                     <td>{{ $transaction->notes }}</td>
-                    <td>{{ $transaction->created_at->format('F j Y') }}</td>
-                    <td>{{ $transaction->created_at->diffForHumans() }}</td>
+                    <td>{{ \Carbon\Carbon::parse($transaction->date)->format('d-m-Y') }}</td>
                     <!-- Action buttons -->
                     <td>
                         <a href="{{ route('transactions.edit', $transaction->id) }}" class="btn btn-warning btn-sm me-1">Edit</a>
@@ -57,6 +53,5 @@
             </tbody>
         </table>
     </div>
-
 </div>
 @endsection
